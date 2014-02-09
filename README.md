@@ -1,6 +1,6 @@
 # gesturekit-visor
 
-> A plugin to show the gesture drawing to the user at runtime. It is automatically mounted on top of the application and can be dragged and snapped to a convenient position.
+> A GestureKit plugin to show the gesture drawing to the user at runtime.
 
 ## How-to
 [TODO]
@@ -18,7 +18,7 @@
 - Web: [http://pazguille.me](http://pazguille.me)
 
 ## Credits
-[![RoamTouch](http://www.gesturekit.com/assets/img/roamtouch.png)](http://roamtouch.com)
+<img src="http://www.gesturekit.com/assets/img/roamtouch.png" width="200" alt="RoamTouch logo">
 
 ## License
 Licensed under Apache v2 License.
