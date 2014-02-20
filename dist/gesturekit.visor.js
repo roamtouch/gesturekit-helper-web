@@ -9,16 +9,20 @@
 (function (window, gesturekit) {
     'use strict';
 
-    var defaults = {
+    var doc = window.document,
+
+        viewport = doc.documentElement,
+
+        defaults = {
             'size': 60,
-            'container': window.document.documentElement,
+            'container': doc.body,
             'drag': true,
             'snap': true
         },
 
         prefix = (function prefix() {
             var regex = /^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/,
-                styleDeclaration = document.getElementsByTagName('script')[0].style,
+                styleDeclaration = doc.getElementsByTagName('script')[0].style,
                 prop;
 
             for (prop in styleDeclaration) {
@@ -85,13 +89,13 @@
 
         if (this._options.drag) {
             this.drag();
-        };
+        }
 
         return this;
     };
 
     /**
-     * Creates a display container to draw gestures.
+     * Creates a display to draw gestures.
      * @memberof! Visor.prototype
      * @function
      * @private
@@ -107,7 +111,7 @@
             'z-index: 999;'
         ];
 
-        this.display = document.createElement('canvas');
+        this.display = doc.createElement('canvas');
         this.display.width = this.display.height = this._options.size;
         this.display.style.cssText = styles.join('');
 
@@ -210,24 +214,24 @@
             point = {},
             ratio = {},
             display = this.display,
-            containerWidth = this.container.clientWidth,
-            containerHeight = this.container.clientHeight,
+            viewportWidth = viewport.clientWidth,
+            viewportHeight = viewport.clientHeight,
             localWidth = this.display.width,
             localHeight = this.display.height;
 
-         if (containerWidth > containerHeight) {
-            localHeight = (containerHeight * display.width) / containerWidth;
+        if (viewportWidth > viewportHeight) {
+            localHeight = (viewportHeight * display.width) / viewportWidth;
             offset.x = 0;
             offset.y = (display.height - localHeight) / 2;
 
         } else {
-            localWidth = (containerWidth * display.height) / containerHeight;
+            localWidth = (viewportWidth * display.height) / viewportHeight;
             offset.y = 0;
             offset.x = (display.width - localWidth) / 2;
         }
 
-        ratio.x = containerWidth / localWidth;
-        ratio.y = containerHeight / localHeight;
+        ratio.x = viewportWidth / localWidth;
+        ratio.y = viewportHeight / localHeight;
 
         point.x = (x / ratio.x) + offset.x;
         point.y = (y / ratio.y) + offset.y;
@@ -264,7 +268,7 @@
                 ctx.moveTo(this.lastPoint[id].x, this.lastPoint[id].y);
                 ctx.lineTo(point.x, point.y);
                 ctx.strokeStyle = '#FFF';
-                ctx.lineWidth = 3;
+                ctx.lineWidth = 2;
                 ctx.lineCap = 'round';
                 ctx.stroke();
             }
@@ -303,8 +307,8 @@
     Visor.prototype._snap = function () {
 
         var that = this,
-            containerWidth = this.container.clientWidth,
-            containerHeight = this.container.clientHeight,
+            viewportWidth = viewport.clientWidth,
+            viewportHeight = viewport.clientHeight,
             displayWidth = this.display.clientWidth,
             displayHeight = this.display.clientHeight,
             y = this.currentOffset.y,
@@ -313,30 +317,30 @@
         if (this.currentOffset.x < displayWidth / 2) {
             x = 2;
 
-        } else if (this.currentOffset.x + displayWidth > containerWidth - displayWidth / 2) {
-            x = containerWidth - displayWidth - 2;
+        } else if (this.currentOffset.x + displayWidth > viewportWidth - displayWidth / 2) {
+            x = viewportWidth - displayWidth - 2;
         }
 
         if (this.currentOffset.y < displayHeight) {
             y = 2;
 
-        } else if (this.currentOffset.y + displayHeight > containerHeight - displayHeight) {
-            y =  containerHeight - displayHeight - 2;
+        } else if (this.currentOffset.y + displayHeight > viewportHeight - displayHeight) {
+            y =  viewportHeight - displayHeight - 2;
 
         } else {
-            x = (this.currentOffset.x + (displayWidth / 2) > containerWidth / 2)
-                ? containerWidth - displayWidth - 2
+            x = (this.currentOffset.x + (displayWidth / 2) > viewportWidth / 2)
+                ? viewportWidth - displayWidth - 2
                 : 2;
         }
 
         this.currentOffset.y = y;
         this.currentOffset.x = x;
 
-        this.display.style['transition'] = prefix + 'transform 200ms ease-in-out';
+        this.display.style.transition = prefix + 'transform 200ms ease-in-out';
         this.display.style[prefix + 'transform'] = 'translate(' + this.currentOffset.x + 'px,' + this.currentOffset.y + 'px)';
 
         window.setTimeout(function () {
-            that.display.style['transition'] = 'none';
+            that.display.style.transition = 'none';
         }, 200);
 
         return this;
@@ -392,4 +396,4 @@
         window.Visor = Visor;
     }
 
-}(this, gesturekit));
+}(this, this.gesturekit));
