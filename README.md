@@ -2,6 +2,8 @@
 
 > A GestureKit plugin to show the gesture drawing to the user at runtime.
 
+<img src="visor.gif" alt="Visor examples">
+
 ## How-to
 [TODO]
 
