@@ -4,14 +4,57 @@
 
 <img src="https://i.cloudup.com/ijtx3QomJW.gif" alt="Visor examples">
 
-## How-to
-[TODO]
+## Usage
+
+### Add the dependency into your HTML file.
+You should download the dependency and reference the JavaScript file using a `<script>` tag somewhere on your HTML pages.
+```html
+<script src="gesturekit.min.js"></script>
+```
+
+### Add visor.js into your HTML file.
+You should download the library and reference the JavaScript file using a `<script>` tag somewhere on your HTML pages.
+```html
+<script src="visor.min.js"></script>
+```
+
+### Initialize Visor.
+Initializes a new instance of `Visor`.
+```js
+var visor = new Visor();
+```
 
 ## API
-[TODO]
 
-## Development setup
-[TODO]
+#### Visor([options])
+Initialize an instance of Visor. You could customize a Visor instance using the following options, and shown is their default value.
+- `options`: A given options to customize an instance.
+    - `size`: A given number indicating the size of the visor in `px`. Default: `60`.
+    - `container`: An HTMLElement to use as visor's container. Default: `document.body`.
+    - `drag`: Enable or disable if you want to drag the visor. Default: `true`.
+    - `snap`: Enable or disable if you want to snap visor to the container. Default: `true`.
+
+```js
+var visor = new Visor({
+    'size': 120,
+    'drag': true,
+    'snap': false
+});
+```
+
+#### Visor#show()
+Shows an instance of Visor.
+
+```js
+visor.show();
+```
+
+#### Visor#hide()
+Hides an instance of Visor.
+
+```js
+visor.hide();
+```
 
 ## Maintained by
 - Guille Paz (Front-end developer | Web standards lover)
