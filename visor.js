@@ -7,6 +7,8 @@
 
     var doc = window.document,
 
+        visorImage = 'https://i.cloudup.com/MqRsf26yX9-3000x3000.png',
+
         viewport = doc.documentElement,
 
         defaults = {
@@ -76,7 +78,7 @@
 
         this.currentOffset = {
             'x': 2,
-            'y': 2
+            'y': 60
         };
 
         this._createDisplay();
@@ -100,16 +102,20 @@
     Visor.prototype._createDisplay = function () {
         var styles = [
             'background-color: #909090;',
-            'background-image: url("visor/assets/gk.png");',
+            'background-image: url("' + visorImage + '");',
             'background-size: cover;',
             'border-radius: 10px;',
             'position: fixed;',
+            'top: 0;',
+            'left: 0;',
             'z-index: 999;'
         ];
 
         this.display = doc.createElement('canvas');
         this.display.width = this.display.height = this._options.size;
         this.display.style.cssText = styles.join('');
+
+        this.display.className = 'gk-visor-display';
 
         this.display.style[prefix + 'transform'] = 'translate(' + this.currentOffset.x + 'px,' + this.currentOffset.y + 'px)';
 
@@ -287,7 +293,7 @@
         this.lastPoint = {};
         this._ctx.clearRect(0, 0, this.display.width, this.display.height);
 
-        this.display.style.backgroundImage = 'url("visor/assets/gk.png")';
+        this.display.style.backgroundImage = 'url("' + visorImage +'")';
 
         return this;
     };
