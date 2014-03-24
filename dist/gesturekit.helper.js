@@ -11,7 +11,7 @@
 
     var doc = window.document,
 
-        visorImage = 'https://i.cloudup.com/MqRsf26yX9-3000x3000.png',
+        helperImage = 'https://i.cloudup.com/MqRsf26yX9-3000x3000.png',
 
         viewport = doc.documentElement,
 
@@ -53,24 +53,24 @@
     }
 
     /**
-     * Creates a new instance of Visor.
+     * Creates a new instance of Helper.
      * @constructor
-     * @returns {visor}
+     * @returns {helper}
      */
-    function Visor(options) {
+    function Helper(options) {
         this._init(options);
 
         return this;
     }
 
     /**
-     * Initializes a new instance of Visor.
-     * @memberof! Visor.prototype
+     * Initializes a new instance of Helper.
+     * @memberof! Helper.prototype
      * @function
      * @private
-     * @returns {visor}
+     * @returns {helper}
      */
-    Visor.prototype._init = function (options) {
+    Helper.prototype._init = function (options) {
 
         this._options = customizeOptions(options || {});
 
@@ -98,15 +98,15 @@
 
     /**
      * Creates a display to draw gestures.
-     * @memberof! Visor.prototype
+     * @memberof! Helper.prototype
      * @function
      * @private
-     * @returns {visor}
+     * @returns {helper}
      */
-    Visor.prototype._createDisplay = function () {
+    Helper.prototype._createDisplay = function () {
         var styles = [
             'background-color: #909090;',
-            'background-image: url("' + visorImage + '");',
+            'background-image: url("' + helperImage + '");',
             'background-size: cover;',
             'border-radius: 10px;',
             'position: fixed;',
@@ -119,7 +119,7 @@
         this.display.width = this.display.height = this._options.size;
         this.display.style.cssText = styles.join('');
 
-        this.display.className = 'gk-visor-display';
+        this.display.className = 'gk-helper-display';
 
         this.display.style[prefix + 'transform'] = 'translate(' + this.currentOffset.x + 'px,' + this.currentOffset.y + 'px)';
 
@@ -132,12 +132,12 @@
 
     /**
      *
-     * @memberof! Visor.prototype
+     * @memberof! Helper.prototype
      * @function
      * @private
-     * @returns {visor}
+     * @returns {helper}
      */
-    Visor.prototype._defineEvents = function () {
+    Helper.prototype._defineEvents = function () {
         var that = this;
 
         gesturekit.on('gesturemotion', function (eve) {
@@ -157,12 +157,12 @@
 
     /**
      *
-     * @memberof! Visor.prototype
+     * @memberof! Helper.prototype
      * @function
      * @private
-     * @returns {visor}
+     * @returns {helper}
      */
-    Visor.prototype.drag = function () {
+    Helper.prototype.drag = function () {
         var that = this,
             startOffset = {
                 'x': 0,
@@ -210,12 +210,12 @@
 
     /**
      *
-     * @memberof! Visor.prototype
+     * @memberof! Helper.prototype
      * @function
      * @private
-     * @returns {visor}
+     * @returns {helper}
      */
-    Visor.prototype._scalePoints = function (x, y) {
+    Helper.prototype._scalePoints = function (x, y) {
         var offset = {},
             point = {},
             ratio = {},
@@ -247,12 +247,12 @@
 
     /**
      *
-     * @memberof! Visor.prototype
+     * @memberof! Helper.prototype
      * @function
      * @private
-     * @returns {visor}
+     * @returns {helper}
      */
-    Visor.prototype._draw = function (touches) {
+    Helper.prototype._draw = function (touches) {
 
         this.display.style.backgroundImage = 'none';
 
@@ -287,30 +287,30 @@
 
     /**
      *
-     * @memberof! Visor.prototype
+     * @memberof! Helper.prototype
      * @function
      * @private
-     * @returns {visor}
+     * @returns {helper}
      */
-    Visor.prototype._finishDrawing = function (eve) {
+    Helper.prototype._finishDrawing = function (eve) {
 
         this.lastPoint = {};
         this._ctx.clearRect(0, 0, this.display.width, this.display.height);
 
-        this.display.style.backgroundImage = 'url("' + visorImage +'")';
+        this.display.style.backgroundImage = 'url("' + helperImage +'")';
 
         return this;
     };
 
 
     /**
-     * Snap visor to the container.
-     * @memberof! Visor.prototype
+     * Snap helper to the container.
+     * @memberof! Helper.prototype
      * @function
      * @private
-     * @returns {visor}
+     * @returns {helper}
      */
-    Visor.prototype._snap = function () {
+    Helper.prototype._snap = function () {
 
         var that = this,
             viewportWidth = viewport.clientWidth,
@@ -353,15 +353,15 @@
     };
 
     /**
-     * Show visor.
-     * @memberof! Visor.prototype
+     * Show helper.
+     * @memberof! Helper.prototype
      * @function
-     * @returns {visor}
+     * @returns {helper}
      * @example
-     * // Show visor.
-     * visor.show();
+     * // Show helper.
+     * helper.show();
      */
-    Visor.prototype.show = function () {
+    Helper.prototype.show = function () {
         this._enabled = true;
         this.display.style.display = 'block';
 
@@ -369,15 +369,15 @@
     };
 
     /**
-     * Hide visor.
-     * @memberof! Visor.prototype
+     * Hide helper.
+     * @memberof! Helper.prototype
      * @function
-     * @returns {visor}
+     * @returns {helper}
      * @example
-     * // Hide visor.
-     * visor.hide();
+     * // Hide helper.
+     * helper.hide();
      */
-    Visor.prototype.hide = function () {
+    Helper.prototype.hide = function () {
         this._enabled = false;
         this.display.style.display = 'none';
 
@@ -385,21 +385,21 @@
     };
 
     /**
-     * Expose Visor
+     * Expose Helper
      */
     // AMD suppport
     if (typeof window.define === 'function' && window.define.amd !== undefined) {
-        window.define('Visor', [], function () {
-            return Visor;
+        window.define('Helper', [], function () {
+            return Helper;
         });
 
     // CommonJS suppport
     } else if (typeof module !== 'undefined' && module.exports !== undefined) {
-        module.exports = Visor;
+        module.exports = Helper;
 
     // Default
     } else {
-        window.Visor = Visor;
+        window.Helper = Helper;
     }
 
 }(this, this.gesturekit));
