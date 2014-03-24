@@ -1,8 +1,8 @@
-# GestureKit Visor Plugin
+# GestureKit Helper
 
 > A GestureKit plugin to show the gesture drawing to the user at runtime.
 
-<img src="https://i.cloudup.com/ijtx3QomJW.gif" alt="Visor examples">
+<img src="https://i.cloudup.com/ijtx3QomJW.gif" alt="Helper examples">
 
 ## Usage
 
@@ -12,48 +12,48 @@ You should download the dependency and reference the JavaScript file using a `<s
 <script src="gesturekit.min.js"></script>
 ```
 
-### Add visor.js into your HTML file.
+### Add gesturekit.helper.js into your HTML file.
 You should download the library and reference the JavaScript file using a `<script>` tag somewhere on your HTML pages.
 ```html
-<script src="visor.min.js"></script>
+<script src="gesturekit.helper.min.js"></script>
 ```
 
-### Initialize Visor.
-Initializes a new instance of `Visor`.
+### Initialize Helper.
+Initializes a new instance of `Helper`.
 ```js
-var visor = new Visor();
+var Helper = new Helper();
 ```
 
 ## API
 
-#### Visor([options])
-Initialize an instance of Visor. You could customize a Visor instance using the following options, and shown is their default value.
+#### Helper([options])
+Initialize an instance of Helper. You could customize a Helper instance using the following options, and shown is their default value.
 - `options`: A given options to customize an instance.
-    - `size`: A given number indicating the size of the visor in `px`. Default: `60`.
-    - `container`: An HTMLElement to use as visor's container. Default: `document.body`.
-    - `drag`: Enable or disable if you want to drag the visor. Default: `true`.
-    - `snap`: Enable or disable if you want to snap visor to the container. Default: `true`.
+    - `size`: A given number indicating the size of the helper in `px`. Default: `60`.
+    - `container`: An HTMLElement to use as helper's container. Default: `document.body`.
+    - `drag`: Enable or disable if you want to drag the helper. Default: `true`.
+    - `snap`: Enable or disable if you want to snap helper to the container. Default: `true`.
 
 ```js
-var visor = new Visor({
+var helper = new Helper({
     'size': 120,
     'drag': true,
     'snap': false
 });
 ```
 
-#### Visor#show()
-Shows an instance of Visor.
+#### Helper#show()
+Shows an instance of Helper.
 
 ```js
-visor.show();
+helper.show();
 ```
 
-#### Visor#hide()
-Hides an instance of Visor.
+#### Helper#hide()
+Hides an instance of Helper.
 
 ```js
-visor.hide();
+helper.hide();
 ```
 
 ## Maintained by

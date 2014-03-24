@@ -1,5 +1,5 @@
 /*!
- * GestureKit Visor v1.0.0
+ * GestureKit Helper v2.0.0
  * http://gesturekit.com/
  *
  * Copyright (c) 2014, RoamTouch

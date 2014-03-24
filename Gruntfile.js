@@ -8,7 +8,7 @@ module.exports = function (grunt) {
         'banner': {
             'full': [
                 '/*!',
-                ' * GestureKit Visor v<%= pkg.version %>',
+                ' * GestureKit Helper v<%= pkg.version %>',
                 ' * http://gesturekit.com/',
                 ' *',
                 ' * Copyright (c) <%= grunt.template.today("yyyy") %>, RoamTouch',
@@ -16,7 +16,7 @@ module.exports = function (grunt) {
                 ' * http://gesturekit.com/',
                 ' */\n'
             ].join('\n'),
-            'min': '/*! GestureKit Visor v<%= pkg.version %> http://gesturekit.com/ | Released under the Apache v2 License. */'
+            'min': '/*! GestureKit Helper v<%= pkg.version %> http://gesturekit.com/ | Released under the Apache v2 License. */'
         },
 
         'concat': {
@@ -33,8 +33,8 @@ module.exports = function (grunt) {
                 'options': {
                     'banner': '<%= banner.full %>'
                 },
-                'src': ['./visor.js'],
-                'dest': './dist/gesturekit.visor.js'
+                'src': ['./helper.js'],
+                'dest': './dist/gesturekit.helper.js'
             }
         },
 
@@ -46,7 +46,7 @@ module.exports = function (grunt) {
 
             'js': {
                 'src': ['<%= concat.js.src %>'],
-                'dest': './dist/gesturekit.visor.min.js'
+                'dest': './dist/gesturekit.helper.min.js'
             }
 
         },
