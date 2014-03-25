@@ -7,7 +7,7 @@
 
     var doc = window.document,
 
-        helperImage = 'https://i.cloudup.com/MqRsf26yX9-3000x3000.png',
+        helperImage = 'https://i.cloudup.com/xGIfnHRDjw-1200x1200.png', // https://i.cloudup.com/6xhE1qpu0r.gif,
 
         viewport = doc.documentElement,
 
@@ -101,7 +101,7 @@
      */
     Helper.prototype._createDisplay = function () {
         var styles = [
-            'background-color: #909090;',
+            'background-color: #626366;',
             'background-image: url("' + helperImage + '");',
             'background-size: cover;',
             'border-radius: 10px;',
