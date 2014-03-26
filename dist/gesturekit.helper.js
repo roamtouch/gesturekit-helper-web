@@ -1,5 +1,5 @@
 /*!
- * GestureKit Helper v2.0.0
+ * GestureKit Helper v2.0.1
  * http://gesturekit.com/
  *
  * Copyright (c) 2014, RoamTouch
@@ -11,7 +11,7 @@
 
     var doc = window.document,
 
-        helperImage = 'https://i.cloudup.com/MqRsf26yX9-3000x3000.png',
+        helperImage = 'https://i.cloudup.com/jAmu8s95gF-3000x3000.png',
 
         viewport = doc.documentElement,
 
@@ -80,6 +80,8 @@
 
         this._motion = false;
 
+        this._move = false;
+
         this.currentOffset = {
             'x': 2,
             'y': 60
@@ -105,7 +107,7 @@
      */
     Helper.prototype._createDisplay = function () {
         var styles = [
-            'background-color: #909090;',
+            'background-color: #999999;',
             'background-image: url("' + helperImage + '");',
             'background-size: cover;',
             'border-radius: 10px;',
@@ -190,6 +192,8 @@
                 that.currentOffset.x = x;
                 that.currentOffset.y = y;
 
+                that._move = true;
+
                 return;
             }
         });
@@ -197,11 +201,17 @@
         gesturekit.on('pointerend', function (eve) {
             if (eve.target === that.display) {
 
+                if (!that._move) {
+                    console.log('Show Helper');
+                }
+
                 if (that._options.snap) {
                     that._snap();
                 }
 
                 gesturekit.enable();
+
+                that._move = false;
             }
         });
 
@@ -264,19 +274,23 @@
             point;
 
         for (i; i < len; i += 1) {
-
             touch = touches[i];
             id = touch.identifier;
             point = this._scalePoints(touch.pageX, touch.pageY);
 
+            ctx.beginPath();
+
             if (this.lastPoint[id]) {
-                ctx.beginPath();
                 ctx.moveTo(this.lastPoint[id].x, this.lastPoint[id].y);
                 ctx.lineTo(point.x, point.y);
                 ctx.strokeStyle = '#FFF';
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 3;
                 ctx.lineCap = 'round';
                 ctx.stroke();
+            } else {
+                ctx.arc(point.x, point.y, 3.5, 0, 2*Math.PI);
+                ctx.fillStyle = '#FFF';
+                ctx.fill();
             }
 
             this.lastPoint[id] = {x: point.x, y: point.y};
