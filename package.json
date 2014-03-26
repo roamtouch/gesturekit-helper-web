@@ -1,6 +1,6 @@
 {
   "name": "gesturekit-helper-web",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A GestureKit plugin to show the gesture drawing to the user at runtime.",
   "author": "Guille Paz <guille87paz@gmail.com>",
   "contributors": [
