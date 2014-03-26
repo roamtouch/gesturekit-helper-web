@@ -13,13 +13,16 @@
 
         helperImage = 'https://i.cloudup.com/jAmu8s95gF-3000x3000.png',
 
+        url = 'http://api.gesturekit.com/v1.1/index.php/sdk/getgestures_help/',
+
         viewport = doc.documentElement,
 
         defaults = {
             'size': 60,
             'container': doc.body,
             'drag': true,
-            'snap': true
+            'snap': true,
+            'title': 'Gestures'
         },
 
         prefix = (function prefix() {
@@ -41,6 +44,27 @@
 
             return '';
         }());
+
+    function render(gesture) {
+        return [
+            '<div class="gk-helper-gesture">',
+            '<img src="data:image/png;base64,' + gesture.img + '" height="150">',
+            '<p class="gk-helper-label">' +  gesture.method + '</p>',
+            '<p class="gk-helper-label">' +  gesture.img_description + '</p>',
+            '</div>'
+        ].join('');
+    }
+
+    function createNode(tag, classes, parent) {
+        parent = parent || doc.body;
+
+        var node = document.createElement(tag);
+        node.className = classes;
+
+        parent.appendChild(node);
+
+        return node;
+    }
 
     function customizeOptions(options) {
         var prop;
@@ -94,6 +118,8 @@
         if (this._options.drag) {
             this.drag();
         }
+
+        this._createShowroom();
 
         return this;
     };
@@ -201,15 +227,15 @@
         gesturekit.on('pointerend', function (eve) {
             if (eve.target === that.display) {
 
-                if (!that._move) {
-                    console.log('Show Helper');
-                }
-
                 if (that._options.snap) {
                     that._snap();
                 }
 
                 gesturekit.enable();
+
+                if (!that._move) {
+                    that.showShowroom();
+                }
 
                 that._move = false;
             }
@@ -399,21 +425,134 @@
     };
 
     /**
+     * Create a helper showroom.
+     * @memberof! Helper.prototype
+     * @function
+     * @private
+     * @returns {helper}
+     */
+    Helper.prototype._createShowroom = function (options) {
+        var that = this,
+            showroom = {};
+
+        showroom.container = createNode('div', 'gk-helper-container gk-helper-hide');
+        showroom.title = createNode('h2', 'gk-helper-title', showroom.container);
+        showroom.title.innerHTML = this._options.title;
+        showroom.closeBtn = createNode('button', 'gk-helper-close', showroom.container);
+        showroom.closeBtn.addEventListener('touchend', function () {
+            that.hideShowroom();
+        });
+
+        this.showroom = showroom;
+
+        this.loadGestures();
+
+        return this;
+    };
+
+    /**
+     * Show helper showroom.
+     * @memberof! Helper.prototype
+     * @function
+     * @returns {helper}
+     * @example
+     * // Show help.
+     * helper.showShowroom();
+     */
+    Helper.prototype.showShowroom = function () {
+        this.showroom.container.style.display = 'block';
+        gesturekit.disable();
+
+        return this;
+    };
+
+    /**
+     * Hide helper showroom.
+     * @memberof! Helper.prototype
+     * @function
+     * @returns {helper}
+     * @example
+     * // Hide Helper showroom.
+     * Helper.hideShowroom();
+     */
+    Helper.prototype.hideShowroom = function () {
+        this.showroom.container.style.display = 'none';
+        gesturekit.enable();
+
+        return this;
+    };
+
+    /**
+     * Loads gestures.
+     * @memberof! Helper.prototype
+     * @function
+     * @returns {Helper} Returns a new instance of Helper.
+     */
+    Helper.prototype.loadGestures = function (uid) {
+        var that = this,
+            xhr = new window.XMLHttpRequest(),
+            status,
+            response;
+
+        uid = uid || gesturekit._options.uid;
+
+        xhr.open('GET', url + uid);
+
+        // Add events
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === xhr.DONE) {
+                status = xhr.status;
+
+                if ((status >= 200 && status < 300) || status === 304 || status === 0) {
+                    response = JSON.parse(xhr.response || xhr.responseText);
+                    that.renderGestures(response.gestureset.gestures);
+                }
+            }
+        };
+
+        xhr.send();
+
+        return this;
+    };
+
+    /**
+     * Render a given collection of gestures.
+     * @memberof! Helper.prototype
+     * @function
+     * @returns {helper}
+     */
+    Helper.prototype.renderGestures = function (gestures) {
+        var tmp = '';
+
+        gestures.forEach(function (gesture) {
+            tmp += render(gesture);
+        });
+
+        this.showroom.container.insertAdjacentHTML('beforeend', tmp);
+
+        return this;
+    };
+
+    function helper(options) {
+        return new Helper(options);
+    };
+
+    /**
      * Expose Helper
      */
     // AMD suppport
     if (typeof window.define === 'function' && window.define.amd !== undefined) {
-        window.define('Helper', [], function () {
-            return Helper;
+        window.define('helper', [], function () {
+            return helper;
         });
 
     // CommonJS suppport
     } else if (typeof module !== 'undefined' && module.exports !== undefined) {
-        module.exports = Helper;
+        module.exports = helper;
 
     // Default
     } else {
-        window.Helper = Helper;
+        window.gesturekit.helper = helper;
     }
 
 }(this, this.gesturekit));

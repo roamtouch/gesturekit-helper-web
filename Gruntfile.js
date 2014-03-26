@@ -35,6 +35,14 @@ module.exports = function (grunt) {
                 },
                 'src': ['./helper.js'],
                 'dest': './dist/gesturekit.helper.js'
+            },
+
+            'css': {
+                'options': {
+                    'banner': '<%= banner.full %>'
+                },
+                'src': ['./helper.css'],
+                'dest': './dist/gesturekit.helper.css'
             }
         },
 
@@ -49,6 +57,18 @@ module.exports = function (grunt) {
                 'dest': './dist/gesturekit.helper.min.js'
             }
 
+        },
+
+        'cssmin': {
+            'options': {
+                'banner': '<%= banner.min %>',
+                'keepSpecialComments': 0
+            },
+
+            'chico': {
+                'src': ['<%= concat.css.dest %>'],
+                'dest': './dist/gesturekit.helper.min.css'
+            }
         },
 
         'jslint': { // configure the task
@@ -69,11 +89,12 @@ module.exports = function (grunt) {
     // Load plugins
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-jslint');
 
     // Resgister task(s).
     grunt.registerTask('default', []);
     grunt.registerTask('dev', ['concat']);
     grunt.registerTask('lint', ['dev', 'jslint']);
-    grunt.registerTask('dist', ['dev', 'uglify']);
+    grunt.registerTask('dist', ['dev', 'uglify', 'cssmin']);
 };
