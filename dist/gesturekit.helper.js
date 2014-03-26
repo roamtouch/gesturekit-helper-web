@@ -95,6 +95,7 @@
      * @returns {helper}
      */
     Helper.prototype._init = function (options) {
+        var that = this;
 
         this._options = customizeOptions(options || {});
 
@@ -120,6 +121,10 @@
         }
 
         this._createShowroom();
+
+        gesturekit.on('GK_HELP', function (eve) {
+            that.showShowroom();
+        });
 
         return this;
     };
