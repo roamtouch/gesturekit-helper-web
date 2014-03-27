@@ -123,7 +123,7 @@
         this._createShowroom();
 
         gesturekit.on('GK_HELP', function (eve) {
-            that.showShowroom();
+            that.showGestures();
         });
 
         return this;
@@ -239,7 +239,7 @@
                 gesturekit.enable();
 
                 if (!that._move) {
-                    that.showShowroom();
+                    that.showGestures();
                 }
 
                 that._move = false;
@@ -445,7 +445,7 @@
         showroom.title.innerHTML = this._options.title;
         showroom.closeBtn = createNode('button', 'gk-helper-close', showroom.container);
         showroom.closeBtn.addEventListener('touchend', function () {
-            that.hideShowroom();
+            that.hideGestures();
         });
 
         this.showroom = showroom;
@@ -456,15 +456,15 @@
     };
 
     /**
-     * Show helper showroom.
+     * Show available gestures.
      * @memberof! Helper.prototype
      * @function
      * @returns {helper}
      * @example
-     * // Show help.
-     * helper.showShowroom();
+     * // Show available gestures.
+     * helper.showGestures();
      */
-    Helper.prototype.showShowroom = function () {
+    Helper.prototype.showGestures = function () {
         this.showroom.container.style.display = 'block';
         gesturekit.disable();
 
@@ -472,15 +472,15 @@
     };
 
     /**
-     * Hide helper showroom.
+     * Hide available gestures.
      * @memberof! Helper.prototype
      * @function
      * @returns {helper}
      * @example
-     * // Hide Helper showroom.
-     * Helper.hideShowroom();
+     * // Hide available gestures.
+     * Helper.hideGestures();
      */
-    Helper.prototype.hideShowroom = function () {
+    Helper.prototype.hideGestures = function () {
         this.showroom.container.style.display = 'none';
         gesturekit.enable();
 
@@ -493,15 +493,15 @@
      * @function
      * @returns {Helper} Returns a new instance of Helper.
      */
-    Helper.prototype.loadGestures = function (uid) {
+    Helper.prototype.loadGestures = function (uiid) {
         var that = this,
             xhr = new window.XMLHttpRequest(),
             status,
             response;
 
-        uid = uid || gesturekit._options.uid;
+        uiid = uiid || gesturekit._options.uiid;
 
-        xhr.open('GET', url + uid);
+        xhr.open('GET', url + uiid);
 
         // Add events
         xhr.onreadystatechange = function () {
