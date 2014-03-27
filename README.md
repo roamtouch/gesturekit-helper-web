@@ -12,6 +12,12 @@ You should download the dependency and reference the JavaScript file using a `<s
 <script src="gesturekit.min.js"></script>
 ```
 
+### Add gesturekit.helper.css into your HTML file.
+You should download the library and reference the CSS file on your HTML pages.
+```html
+<link rel="stylesheet" href="gesturekit.helper.min.css">
+```
+
 ### Add gesturekit.helper.js into your HTML file.
 You should download the library and reference the JavaScript file using a `<script>` tag somewhere on your HTML pages.
 ```html
@@ -21,39 +27,62 @@ You should download the library and reference the JavaScript file using a `<scri
 ### Initialize Helper.
 Initializes a new instance of `Helper`.
 ```js
-var Helper = new Helper();
+var helper = gesturekit.helper();
 ```
 
 ## API
 
-#### Helper([options])
+#### gesturekit.helper([options])
 Initialize an instance of Helper. You could customize a Helper instance using the following options, and shown is their default value.
 - `options`: A given options to customize an instance.
     - `size`: A given number indicating the size of the helper in `px`. Default: `60`.
     - `container`: An HTMLElement to use as helper's container. Default: `document.body`.
     - `drag`: Enable or disable if you want to drag the helper. Default: `true`.
     - `snap`: Enable or disable if you want to snap helper to the container. Default: `true`.
+    - `title`: The title of the available gestures. Default: `Gestures`.
 
 ```js
-var helper = new Helper({
+var helper = gesturekit.helper({
     'size': 120,
     'drag': true,
-    'snap': false
+    'snap': false,
+    'title': 'Gestures'
 });
 ```
 
-#### Helper#show()
-Shows an instance of Helper.
+#### gesturekit.helper#show()
+Shows the helper visor.
 
 ```js
 helper.show();
 ```
 
-#### Helper#hide()
-Hides an instance of Helper.
+#### gesturekit.helper#hide()
+Hides the helper visor.
 
 ```js
 helper.hide();
+```
+
+#### gesturekit.helper#showGestures()
+Shows the available gestures.
+
+```js
+helper.showGestures();
+```
+
+#### gesturekit.helper#hideGestures()
+Hides the available gestures.
+
+```js
+helper.hideGestures();
+```
+
+#### gesturekit.helper#loadGestures([uiid])
+Loads the available gestures from a given `uiid`.
+
+```js
+helper.loadGestures('xxx-xxx-xxx-xxx');
 ```
 
 ## Maintained by
