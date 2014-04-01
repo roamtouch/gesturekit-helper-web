@@ -48,7 +48,7 @@
     function render(gesture) {
         return [
             '<div class="gk-helper-gesture">',
-            '<img src="data:image/png;base64,' + gesture.img + '" height="150">',
+            '<img src="data:image/png;base64,' + gesture.img + '" height="120" width="120">',
             '<p class="gk-helper-label">' +  gesture.method + '</p>',
             '<p class="gk-helper-label">' +  gesture.img_description + '</p>',
             '</div>'
