@@ -118,7 +118,7 @@
 
         this._createShowroom();
 
-        gesturekit.on('GK_HELP', function (eve) {
+        gesturekit.on('HELP', function (eve) {
             that.showGestures();
         });
 
