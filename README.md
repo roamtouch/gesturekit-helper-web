@@ -78,8 +78,8 @@ Hides the available gestures.
 helper.hideGestures();
 ```
 
-#### gesturekit.helper#loadGestures([uiid])
-Loads the available gestures from a given `uiid`.
+#### gesturekit.helper#loadGestures([gid])
+Loads the available gestures from a given `gid`.
 
 ```js
 helper.loadGestures('xxx-xxx-xxx-xxx');

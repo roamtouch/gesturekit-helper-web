@@ -488,20 +488,21 @@
     };
 
     /**
-     * Loads gestures.
+     * Loads the available gestures from a given gid.
      * @memberof! Helper.prototype
      * @function
+     * @params {String} gid - A given GID.
      * @returns {Helper} Returns a new instance of Helper.
      */
-    Helper.prototype.loadGestures = function (uiid) {
+    Helper.prototype.loadGestures = function (gid) {
         var that = this,
             xhr = new window.XMLHttpRequest(),
             status,
             response;
 
-        uiid = uiid || gesturekit._options.uiid;
+        gid = gid || gesturekit._options.gid;
 
-        xhr.open('GET', url + uiid);
+        xhr.open('GET', url + gid);
 
         // Add events
         xhr.onreadystatechange = function () {
