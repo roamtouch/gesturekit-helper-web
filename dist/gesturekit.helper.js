@@ -175,13 +175,28 @@
 
         gesturekit.on('gesturemotion', function (eve) {
             that._motion = true;
+            that.display.style.backgroundImage = 'none';
             that._draw(eve.touches);
         });
 
         gesturekit.on('gestureend', function () {
             if (that._motion) {
                 that._motion = false;
-                that._finishDrawing();
+
+                var key,
+                    ctx = that._ctx;
+
+                for (key in that.lastPoint) {
+                    ctx.beginPath();
+                    ctx.arc(that.lastPoint[key].x, that.lastPoint[key].y, 3.5, 0, 2*Math.PI);
+                    ctx.fillStyle = '#FFF';
+                    ctx.fill();
+                }
+
+                // Clear draw
+                setTimeout(function () {
+                    that._finishDrawing();
+                }, 200);
             }
         });
 
@@ -295,8 +310,6 @@
      */
     Helper.prototype._draw = function (touches) {
 
-        this.display.style.backgroundImage = 'none';
-
         var i = 0,
             len = touches.length,
             ctx = this._ctx,
@@ -337,13 +350,10 @@
      * @private
      * @returns {helper}
      */
-    Helper.prototype._finishDrawing = function (eve) {
-
+    Helper.prototype._finishDrawing = function () {
+        this.display.style.backgroundImage = 'url("' + helperImage +'")';
         this.lastPoint = {};
         this._ctx.clearRect(0, 0, this.display.width, this.display.height);
-
-        this.display.style.backgroundImage = 'url("' + helperImage +'")';
-
         return this;
     };
 
