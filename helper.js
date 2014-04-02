@@ -169,31 +169,18 @@
     Helper.prototype._defineEvents = function () {
         var that = this;
 
+        gesturekit.on('gesturestart', function (eve) {
+            that._draw(eve.touches);
+        });
+
         gesturekit.on('gesturemotion', function (eve) {
-            that._motion = true;
-            that.display.style.backgroundImage = 'none';
             that._draw(eve.touches);
         });
 
         gesturekit.on('gestureend', function () {
-            if (that._motion) {
-                that._motion = false;
-
-                var key,
-                    ctx = that._ctx;
-
-                for (key in that.lastPoint) {
-                    ctx.beginPath();
-                    ctx.arc(that.lastPoint[key].x, that.lastPoint[key].y, 3.5, 0, 2*Math.PI);
-                    ctx.fillStyle = '#FFF';
-                    ctx.fill();
-                }
-
-                // Clear draw
-                setTimeout(function () {
-                    that._finishDrawing();
-                }, 200);
-            }
+            setTimeout(function () {
+                that._finishDrawing();
+            }, 10);
         });
 
         return this;
@@ -309,9 +296,14 @@
         var i = 0,
             len = touches.length,
             ctx = this._ctx,
+            style = this.display.style,
             id,
             touch,
             point;
+
+        if (style.backgroundImage !== 'none') {
+            style.backgroundImage = 'none';
+        }
 
         for (i; i < len; i += 1) {
             touch = touches[i];
@@ -352,7 +344,6 @@
         this._ctx.clearRect(0, 0, this.display.width, this.display.height);
         return this;
     };
-
 
     /**
      * Snap helper to the container.
