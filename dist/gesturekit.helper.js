@@ -1,5 +1,5 @@
 /*!
- * GestureKit Helper v2.0.1
+ * GestureKit Helper v2.1.1
  * http://gesturekit.com/
  *
  * Copyright (c) 2014, RoamTouch
@@ -10,6 +10,16 @@
     'use strict';
 
     var doc = window.document,
+
+        docEl = doc.documentElement,
+
+        msPointerSupported = window.navigator.msPointerEnabled,
+
+        touchEvents = {
+            'start': msPointerSupported ? 'MSPointerDown' : 'touchstart',
+            'move': msPointerSupported ? 'MSPointerMove' : 'touchmove',
+            'end': msPointerSupported ? 'MSPointerUp' : 'touchend'
+        },
 
         helperImage = 'https://i.cloudup.com/jAmu8s95gF-3000x3000.png',
 
@@ -204,7 +214,7 @@
                 'y': 0
             };
 
-        gesturekit.on('pointerstart', function (eve) {
+        docEl.addEventListener(touchEvents.start, function (eve) {
             if (eve.target === that.display) {
                 gesturekit.disable();
 
@@ -213,7 +223,7 @@
             }
         });
 
-        gesturekit.on('pointermove', function (eve) {
+        docEl.addEventListener(touchEvents.move, function(eve) {
             if (eve.target === that.display) {
                 eve.preventDefault();
 
@@ -231,7 +241,7 @@
             }
         });
 
-        gesturekit.on('pointerend', function (eve) {
+        docEl.addEventListener(touchEvents.end, function (eve) {
             if (eve.target === that.display) {
 
                 if (that._options.snap) {
